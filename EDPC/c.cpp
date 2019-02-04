@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+using namespace std;
+template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return true; } return false; }
+
+// 入力
+int N;
+long long a[100010][3];
+
+// DPテーブル
+long long dp[100010][3];
+
+int main() {
+  cin >> N;
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < 3; ++j) {
+      cin >> a[i][j];
+    }
+  }
+
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < 3; j++) {
+      for (int k = 0; k < 3; k++) {
+        if (j != k) chmax(dp[i+1][j], dp[i][k] + a[i][j]);
+      }
+    }
+  }
+
+  long long res = 0;
+  for (int j = 0; j < 3; ++j) chmax(res, dp[N][j]);
+  cout << res << endl;
+}
